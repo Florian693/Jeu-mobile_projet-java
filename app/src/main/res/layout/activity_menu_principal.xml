@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MenuPrincipalActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/fond_menu_jouer"
+        android:contentDescription="@null" />
+
+    <!-- ===== LIGNES HORIZONTALES (% de la hauteur) ===== -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gTrophees"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.50" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gPresse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55" />
+
+    <!-- Bureau ET Classement partagent cette ligne : ils restent alignés -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gBasMilieu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gMatchs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.91" />
+
+    <!-- ===== LIGNES VERTICALES (% de la largeur) ===== -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gColGauche"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.22" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gColDroite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.80" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gColCentre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.50" />
+
+    <!-- ===== BOUTONS ===== -->
+
+    <!-- Presse : salle de conférence -->
+    <Button
+        android:id="@+id/btnPresse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_discret"
+        android:text="Presse"
+        android:textColor="#FFFFFF"
+        android:textAllCaps="false"
+        android:fontFamily="@font/press_start_2p"
+        app:layout_constraintTop_toTopOf="@id/gPresse"
+        app:layout_constraintBottom_toBottomOf="@id/gPresse"
+        app:layout_constraintStart_toStartOf="@id/gColGauche"
+        app:layout_constraintEnd_toEndOf="@id/gColGauche" />
+
+    <!-- Trophées : salle des trophées -->
+    <Button
+        android:id="@+id/btnTrophees"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_discret"
+        android:text="Trophées"
+        android:textColor="#FFFFFF"
+        android:textAllCaps="false"
+        android:fontFamily="@font/press_start_2p"
+        app:layout_constraintTop_toTopOf="@id/gTrophees"
+        app:layout_constraintBottom_toBottomOf="@id/gTrophees"
+        app:layout_constraintStart_toStartOf="@id/gColDroite"
+        app:layout_constraintEnd_toEndOf="@id/gColDroite" />
+
+    <!-- Bureau : bâtiment avec le bureau en bois -->
+    <Button
+        android:id="@+id/btnBureau"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_discret"
+        android:text="Bureau"
+        android:textColor="#FFFFFF"
+        android:textAllCaps="false"
+        android:fontFamily="@font/press_start_2p"
+        app:layout_constraintTop_toTopOf="@id/gBasMilieu"
+        app:layout_constraintBottom_toBottomOf="@id/gBasMilieu"
+        app:layout_constraintStart_toStartOf="@id/gColGauche"
+        app:layout_constraintEnd_toEndOf="@id/gColGauche" />
+
+    <!-- Classement : écran avec le podium -->
+    <Button
+        android:id="@+id/btnClassement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_discret"
+        android:text="Classement"
+        android:textColor="#FFFFFF"
+        android:textAllCaps="false"
+        android:fontFamily="@font/press_start_2p"
+        app:layout_constraintTop_toTopOf="@id/gBasMilieu"
+        app:layout_constraintBottom_toBottomOf="@id/gBasMilieu"
+        app:layout_constraintStart_toStartOf="@id/gColDroite"
+        app:layout_constraintEnd_toEndOf="@id/gColDroite" />
+
+    <!-- Matchs : pied du portail du parc -->
+    <Button
+        android:id="@+id/btnMatchs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_discret"
+        android:text="Matchs"
+        android:textColor="#FFFFFF"
+        android:textAllCaps="false"
+        android:fontFamily="@font/press_start_2p"
+        app:layout_constraintTop_toTopOf="@id/gMatchs"
+        app:layout_constraintBottom_toBottomOf="@id/gMatchs"
+        app:layout_constraintStart_toStartOf="@id/gColCentre"
+        app:layout_constraintEnd_toEndOf="@id/gColCentre" />
+
+    <!-- Retour : petit bouton en bas à droite -->
+    <Button
+        android:id="@+id/btnRetour"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="12dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:background="@drawable/btn_discret"
+        android:text="Retour"
+        android:textSize="12sp"
+        android:textColor="#FFFFFF"
+        android:textAllCaps="false"
+        android:fontFamily="@font/press_start_2p"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
