@@ -25,6 +25,13 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, HubActivity.class));
         });
 
+
+        Button btnOptions = findViewById(R.id.btnOptions);
+        btnOptions.setOnClickListener(v -> {
+            Intent intent = new Intent(this, OptionsActivity.class);
+            startActivity(intent);
+        });
+
         btnQuitter.setOnClickListener(v -> finishAffinity());
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

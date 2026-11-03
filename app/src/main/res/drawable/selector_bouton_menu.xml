@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Quand le bouton est pressé -->
+    <item android:state_pressed="true"
+        android:drawable="@drawable/bg_bouton_menu_presse" />
+    <!-- Sinon (état normal) -->
+    <item android:drawable="@drawable/bg_bouton_menu" />
+</selector>

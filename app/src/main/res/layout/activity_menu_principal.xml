@@ -69,83 +69,88 @@
 
     <!-- ===== BOUTONS ===== -->
 
-    <!-- Presse : salle de conférence -->
-    <Button
+    <!-- Presse  -->
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnPresse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/btn_discret"
+        android:background="@drawable/contacte_bouton_menu"
         android:text="Presse"
         android:textColor="#FFFFFF"
         android:textAllCaps="false"
         android:fontFamily="@font/press_start_2p"
+        android:textSize="12sp"
         app:layout_constraintTop_toTopOf="@id/gPresse"
         app:layout_constraintBottom_toBottomOf="@id/gPresse"
         app:layout_constraintStart_toStartOf="@id/gColGauche"
         app:layout_constraintEnd_toEndOf="@id/gColGauche" />
 
-    <!-- Trophées : salle des trophées -->
-    <Button
+    <!-- Trophées  -->
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnTrophees"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/btn_discret"
+        android:background="@drawable/contacte_bouton_menu"
         android:text="Trophées"
         android:textColor="#FFFFFF"
         android:textAllCaps="false"
         android:fontFamily="@font/press_start_2p"
+        android:textSize="12sp"
         app:layout_constraintTop_toTopOf="@id/gTrophees"
         app:layout_constraintBottom_toBottomOf="@id/gTrophees"
         app:layout_constraintStart_toStartOf="@id/gColDroite"
         app:layout_constraintEnd_toEndOf="@id/gColDroite" />
 
-    <!-- Bureau : bâtiment avec le bureau en bois -->
-    <Button
+    <!-- Bureau  -->
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnBureau"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/btn_discret"
+        android:background="@drawable/contacte_bouton_menu"
         android:text="Bureau"
         android:textColor="#FFFFFF"
         android:textAllCaps="false"
         android:fontFamily="@font/press_start_2p"
+        android:textSize="12sp"
         app:layout_constraintTop_toTopOf="@id/gBasMilieu"
         app:layout_constraintBottom_toBottomOf="@id/gBasMilieu"
         app:layout_constraintStart_toStartOf="@id/gColGauche"
         app:layout_constraintEnd_toEndOf="@id/gColGauche" />
 
-    <!-- Classement : écran avec le podium -->
-    <Button
+    <!-- Classement  -->
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnClassement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/btn_discret"
+        android:background="@drawable/contacte_bouton_menu"
         android:text="Classement"
         android:textColor="#FFFFFF"
         android:textAllCaps="false"
         android:fontFamily="@font/press_start_2p"
+        android:textSize="12sp"
         app:layout_constraintTop_toTopOf="@id/gBasMilieu"
         app:layout_constraintBottom_toBottomOf="@id/gBasMilieu"
         app:layout_constraintStart_toStartOf="@id/gColDroite"
         app:layout_constraintEnd_toEndOf="@id/gColDroite" />
 
-    <!-- Matchs : pied du portail du parc -->
-    <Button
+    <!-- Matchs -->
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnMatchs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/btn_discret"
+        android:background="@drawable/contacte_bouton_menu"
         android:text="Matchs"
         android:textColor="#FFFFFF"
         android:textAllCaps="false"
         android:fontFamily="@font/press_start_2p"
+        android:textSize="12sp"
         app:layout_constraintTop_toTopOf="@id/gMatchs"
         app:layout_constraintBottom_toBottomOf="@id/gMatchs"
         app:layout_constraintStart_toStartOf="@id/gColCentre"
         app:layout_constraintEnd_toEndOf="@id/gColCentre" />
 
-    <!-- Retour : petit bouton en bas à droite -->
-    <Button
+    <!-- Retour -->
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnRetour"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
@@ -155,7 +160,7 @@
         android:minHeight="0dp"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
-        android:background="@drawable/btn_discret"
+        android:background="@drawable/contacte_bouton_menu"
         android:text="Retour"
         android:textSize="12sp"
         android:textColor="#FFFFFF"

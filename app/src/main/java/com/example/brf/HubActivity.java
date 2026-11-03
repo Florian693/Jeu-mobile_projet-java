@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
+import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -21,6 +22,12 @@ public class HubActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        // Slot 1 : ouvre le menu principal
+        Button btnSlot1 = findViewById(R.id.btnSlot1);
+        btnSlot1.setOnClickListener(v -> {
+            startActivity(new Intent(HubActivity.this, MenuPrincipalActivity.class));
         });
 
         // Bouton Retour : ferme cet écran et revient au menu principal

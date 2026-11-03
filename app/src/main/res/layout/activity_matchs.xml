@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fond_menu_matchs"
+    tools:context=".MatchsActivity">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnRetour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/selector_bouton_menu"
+        android:fontFamily="@font/press_start_2p"
+        android:paddingHorizontal="16dp"
+        android:text="Retour"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/txtArgent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_cadre_info"
+        android:fontFamily="@font/press_start_2p"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="8dp"
+        android:text="80 M$"
+        android:textColor="#FFFFFF"
+        android:textSize="10sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/txtDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_cadre_info"
+        android:fontFamily="@font/press_start_2p"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="8dp"
+        android:text="12 AOÛT 2026"
+        android:textColor="#FFFFFF"
+        android:textSize="10sp"
+        app:layout_constraintTop_toBottomOf="@id/txtArgent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnVestiaires"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="80dp"
+        android:background="@drawable/selector_bouton_menu"
+        android:fontFamily="@font/press_start_2p"
+        android:paddingHorizontal="20dp"
+        android:text="Vestiaires"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gProchainMatch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.16" />
+
+    <View
+        android:id="@+id/cadreMatch"
+        android:layout_width="0dp"
+        android:layout_height="170dp"
+        android:background="@drawable/bg_cadre_info"
+        app:layout_constraintWidth_percent="0.85"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/gProchainMatch" />
+
+    <!-- notre team -->
+    <TextView
+        android:id="@+id/txtEquipeDomicile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/press_start_2p"
+        android:gravity="center"
+        android:text="BURBURRY FC"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/cadreMatch"
+        app:layout_constraintEnd_toStartOf="@id/txtVs"
+        app:layout_constraintTop_toTopOf="@id/cadreMatch"
+        app:layout_constraintBottom_toBottomOf="@id/cadreMatch" />
+
+    <!-- "VS"  -->
+    <TextView
+        android:id="@+id/txtVs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/press_start_2p"
+        android:text="VS"
+        android:textColor="#FFD54F"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/cadreMatch"
+        app:layout_constraintEnd_toEndOf="@id/cadreMatch"
+        app:layout_constraintTop_toTopOf="@id/cadreMatch"
+        app:layout_constraintBottom_toBottomOf="@id/cadreMatch" />
+
+    <!-- équipe adverse -->
+    <TextView
+        android:id="@+id/txtEquipeExterieur"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/press_start_2p"
+        android:gravity="center"
+        android:text="LIVERPOOL"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@id/txtVs"
+        app:layout_constraintEnd_toEndOf="@id/cadreMatch"
+        app:layout_constraintTop_toTopOf="@id/cadreMatch"
+        app:layout_constraintBottom_toBottomOf="@id/cadreMatch" />
+
+    <!-- Logo de notre équipe -->
+    <ImageView
+        android:id="@+id/imgLogoDomicile"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/logo_burburry"
+        app:layout_constraintStart_toStartOf="@id/txtEquipeDomicile"
+        app:layout_constraintEnd_toEndOf="@id/txtEquipeDomicile"
+        app:layout_constraintBottom_toTopOf="@id/txtEquipeDomicile" />
+
+    <!-- Logo de l'adversaire -->
+    <ImageView
+        android:id="@+id/imgLogoExterieur"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@null"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintStart_toStartOf="@id/txtEquipeExterieur"
+        app:layout_constraintEnd_toEndOf="@id/txtEquipeExterieur"
+        app:layout_constraintBottom_toTopOf="@id/txtEquipeExterieur" />
+
+    <!-- Classement et points : notre team -->
+    <TextView
+        android:id="@+id/txtStatsDomicile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/press_start_2p"
+        android:gravity="center"
+        android:text="12E - 0 PTS"
+        android:textColor="#B8C7E6"
+        android:textSize="8sp"
+        app:layout_constraintStart_toStartOf="@id/txtEquipeDomicile"
+        app:layout_constraintEnd_toEndOf="@id/txtEquipeDomicile"
+        app:layout_constraintTop_toBottomOf="@id/txtEquipeDomicile" />
+
+    <!-- Classement et points : équipe adverse -->
+    <TextView
+        android:id="@+id/txtStatsExterieur"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/press_start_2p"
+        android:gravity="center"
+        android:text="3E - 0 PTS"
+        android:textColor="#B8C7E6"
+        android:textSize="8sp"
+        app:layout_constraintStart_toStartOf="@id/txtEquipeExterieur"
+        app:layout_constraintEnd_toEndOf="@id/txtEquipeExterieur"
+        app:layout_constraintTop_toBottomOf="@id/txtEquipeExterieur" />
+
+    <!-- Numéro de la journée -->
+    <TextView
+        android:id="@+id/txtJournee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="@font/press_start_2p"
+        android:text="JOURNÉE 1"
+        android:textColor="#FFD54F"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/cadreMatch"
+        app:layout_constraintEnd_toEndOf="@id/cadreMatch"
+        app:layout_constraintBottom_toBottomOf="@id/cadreMatch"
+        app:layout_constraintTop_toTopOf="@id/cadreMatch"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnLancerMatch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/selector_bouton_menu"
+        android:fontFamily="@font/press_start_2p"
+        android:paddingHorizontal="20dp"
+        android:text="Lancer le match"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/cadreMatch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

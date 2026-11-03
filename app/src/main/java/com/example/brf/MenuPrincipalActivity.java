@@ -1,5 +1,6 @@
 package com.example.brf;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
@@ -22,12 +23,17 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         // Retour : ferme cet écran, on revient au précédent
         btnRetour.setOnClickListener(v -> finish());
 
+        // Matchs : ouvre l'écran MatchsActivity
+        btnMatchs.setOnClickListener(v -> {
+            Intent intent = new Intent(MenuPrincipalActivity.this, MatchsActivity.class);
+            startActivity(intent);
+        });
+
         // Pour l'instant : un simple message pour tester
         btnPresse.setOnClickListener(v -> message("Presse"));
         btnTrophees.setOnClickListener(v -> message("Trophées"));
         btnBureau.setOnClickListener(v -> message("Bureau"));
         btnClassement.setOnClickListener(v -> message("Classement"));
-        btnMatchs.setOnClickListener(v -> message("Matchs"));
     }
 
     private void message(String nom) {
