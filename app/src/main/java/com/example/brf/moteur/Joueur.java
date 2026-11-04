@@ -74,9 +74,19 @@ public class Joueur {
         return pas;
     }
 
-    public int depenserPE(int cout){
-        if (cout>peActuel);
-        else peActuel = peActuel-cout;
-        return peActuel;
+    public boolean depenserPE(int cout){    //Valide ou non la dépense de PE
+        if (peActuel >= cout){
+            peActuel = peActuel - cout;
+            return true;
+        }
+        else return false;
+    }
+    public void recupererPE(int quantite){    //Valide ou non la recuperation de PE
+        if (peActuel+quantite <= peMax){
+            peActuel = peActuel + quantite;
+        }
+        else {
+            peActuel = peMax;
+        }
     }
 }
