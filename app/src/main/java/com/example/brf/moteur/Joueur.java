@@ -29,4 +29,54 @@ public class Joueur {
         this.peMax = peMax;
         this.peActuel = peMax;
     }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public Poste getPoste() {
+        return poste;
+    }
+
+    public TypeJoueur getType() {
+        return type;
+    }
+
+    public int getAtt() {
+        return att;
+    }
+
+    public int getPeActuel() {
+        return peActuel;
+    }
+
+    public int getPeMax() {
+        return peMax;
+    }
+
+    public int getArr() {
+        return arr;
+    }
+
+    public int getVit() {
+        return vit;
+    }
+
+    public int getDef() {
+        return def;
+    }
+
+    public int getDri() {
+        return dri;
+    }
+
+    public int getPas() {
+        return pas;
+    }
+
+    public int depenserPE(int cout){
+        if (cout>peActuel);
+        else peActuel = peActuel-cout;
+        return peActuel;
+    }
 }
