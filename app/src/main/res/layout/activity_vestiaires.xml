@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VestiairesActivity">
+
+    <!-- Fond -->
+    <ImageView
+        android:id="@+id/imgFondVestiaires"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/fond_vestiaires"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gTableau"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.24" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/zoneTableau"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="0.72"
+        app:layout_constraintHeight_percent="0.42"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/gTableau" />
+
+    <TextView
+        android:id="@+id/txtTitreFormation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/press_start_2p"
+        android:text="FORMATION"
+        android:textColor="#0B1F4D"
+        android:textSize="9sp"
+        app:layout_constraintStart_toStartOf="@id/zoneTableau"
+        app:layout_constraintTop_toTopOf="@id/zoneTableau" />
+
+    <TextView
+        android:id="@+id/txtTitreRemplacants"
+        android:maxLines="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="0dp"
+        android:fontFamily="@font/press_start_2p"
+        android:text="REMPLAÇANTS"
+        android:textColor="#0B1F4D"
+        android:textSize="7sp"
+        app:layout_constraintStart_toEndOf="@id/terrain"
+        app:layout_constraintEnd_toEndOf="@id/zoneTableau"
+        app:layout_constraintTop_toTopOf="@id/zoneTableau" />
+
+    <TextView
+        android:id="@+id/txtNomFormation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_cadre_info"
+        android:fontFamily="@font/press_start_2p"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="8dp"
+        android:text="2-3-1"
+        android:textColor="#FFFFFF"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="@id/zoneTableau"
+        app:layout_constraintBottom_toBottomOf="@id/zoneTableau" />
+
+    <View
+        android:id="@+id/terrain"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_terrain"
+        app:layout_constraintWidth_percent="0.50"
+        app:layout_constraintStart_toStartOf="@id/zoneTableau"
+        app:layout_constraintTop_toBottomOf="@id/txtTitreFormation"
+        app:layout_constraintBottom_toBottomOf="@id/zoneTableau" />
+
+    <include
+        android:id="@+id/joueurGardien"
+        layout="@layout/view_joueur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintStart_toStartOf="@id/terrain"
+        app:layout_constraintEnd_toEndOf="@id/terrain"
+        app:layout_constraintBottom_toBottomOf="@id/terrain" />
+
+    <include
+        android:id="@+id/joueurAttaquant"
+        layout="@layout/view_joueur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@id/terrain"
+        app:layout_constraintEnd_toEndOf="@id/terrain"
+        app:layout_constraintTop_toTopOf="@id/terrain" />
+
+    <include
+        android:id="@+id/joueurMilieuGauche"
+        layout="@layout/view_joueur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="@id/terrain"
+        app:layout_constraintEnd_toStartOf="@id/joueurMilieuCentre"
+        app:layout_constraintTop_toTopOf="@id/terrain"
+        app:layout_constraintVertical_bias="0.35"
+        app:layout_constraintBottom_toBottomOf="@id/terrain" />
+
+    <include
+        android:id="@+id/joueurMilieuCentre"
+        layout="@layout/view_joueur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/joueurMilieuGauche"
+        app:layout_constraintEnd_toStartOf="@id/joueurMilieuDroit"
+        app:layout_constraintTop_toTopOf="@id/terrain"
+        app:layout_constraintVertical_bias="0.35"
+        app:layout_constraintBottom_toBottomOf="@id/terrain" />
+
+    <include
+        android:id="@+id/joueurMilieuDroit"
+        layout="@layout/view_joueur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/joueurMilieuCentre"
+        app:layout_constraintEnd_toEndOf="@id/terrain"
+        app:layout_constraintTop_toTopOf="@id/terrain"
+        app:layout_constraintVertical_bias="0.35"
+        app:layout_constraintBottom_toBottomOf="@id/terrain" />
+
+    <include
+        android:id="@+id/joueurDefenseurGauche"
+        layout="@layout/view_joueur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="@id/terrain"
+        app:layout_constraintEnd_toStartOf="@id/joueurDefenseurDroit"
+        app:layout_constraintTop_toTopOf="@id/terrain"
+        app:layout_constraintBottom_toBottomOf="@id/terrain"
+        app:layout_constraintVertical_bias="0.70" />
+
+    <include
+        android:id="@+id/joueurDefenseurDroit"
+        layout="@layout/view_joueur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/joueurDefenseurGauche"
+        app:layout_constraintEnd_toEndOf="@id/terrain"
+        app:layout_constraintTop_toTopOf="@id/terrain"
+        app:layout_constraintBottom_toBottomOf="@id/terrain"
+        app:layout_constraintVertical_bias="0.70" />
+
+    <include
+        android:id="@+id/remplacant1"
+        layout="@layout/view_remplacant"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintStart_toEndOf="@id/terrain"
+        app:layout_constraintEnd_toEndOf="@id/zoneTableau"
+        app:layout_constraintTop_toTopOf="@id/terrain" />
+
+    <include
+        android:id="@+id/remplacant2"
+        layout="@layout/view_remplacant"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintStart_toEndOf="@id/terrain"
+        app:layout_constraintEnd_toEndOf="@id/zoneTableau"
+        app:layout_constraintTop_toBottomOf="@id/remplacant1" />
+
+    <include
+        android:id="@+id/remplacant3"
+        layout="@layout/view_remplacant"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintStart_toEndOf="@id/terrain"
+        app:layout_constraintEnd_toEndOf="@id/zoneTableau"
+        app:layout_constraintTop_toBottomOf="@id/remplacant2" />
+
+    <include
+        android:id="@+id/remplacant4"
+        layout="@layout/view_remplacant"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintStart_toEndOf="@id/terrain"
+        app:layout_constraintEnd_toEndOf="@id/zoneTableau"
+        app:layout_constraintTop_toBottomOf="@id/remplacant3" />
+
+    <include
+        android:id="@+id/remplacant5"
+        layout="@layout/view_remplacant"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintStart_toEndOf="@id/terrain"
+        app:layout_constraintEnd_toEndOf="@id/zoneTableau"
+        app:layout_constraintTop_toBottomOf="@id/remplacant4" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnRetour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/selector_bouton_menu"
+        android:fontFamily="@font/press_start_2p"
+        android:paddingHorizontal="16dp"
+        android:text="Retour"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/txtArgent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_cadre_info"
+        android:fontFamily="@font/press_start_2p"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="8dp"
+        android:text="80 M$"
+        android:textColor="#FFFFFF"
+        android:textSize="10sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/txtDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_cadre_info"
+        android:fontFamily="@font/press_start_2p"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="8dp"
+        android:text="12 AOÛT 2026"
+        android:textColor="#FFFFFF"
+        android:textSize="10sp"
+        app:layout_constraintTop_toBottomOf="@id/txtArgent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

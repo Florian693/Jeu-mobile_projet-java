@@ -37,6 +37,11 @@
             android:name=".MatchsActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".VestiairesActivity"
+            android:exported="false"
+            android:theme="@style/Theme.BRF"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

@@ -8,6 +8,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import android.widget.Button;
+import android.content.Intent;
 
 public class MatchsActivity extends AppCompatActivity {
 
@@ -24,6 +25,12 @@ public class MatchsActivity extends AppCompatActivity {
 
         Button btnRetour = findViewById(R.id.btnRetour);
         btnRetour.setOnClickListener(v -> finish());
+
+        Button btnVestiaires = findViewById(R.id.btnVestiaires);
+        btnVestiaires.setOnClickListener(v -> {
+            Intent intent = new Intent(MatchsActivity.this, VestiairesActivity.class);
+            startActivity(intent);
+        });
 
     }
 }
