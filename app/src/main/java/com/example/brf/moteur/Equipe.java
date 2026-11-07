@@ -8,6 +8,6 @@ public class Equipe {
     // List<String> JoueursTitulaire = new ArrayList<>();
     // D'abord on essaye juste les 7 joueurs on ajoutera après
     private String nomEquipe;
-    public Equipe(String nomEquipe,) {}
+
 
 }
