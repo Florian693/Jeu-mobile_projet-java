@@ -7,8 +7,8 @@ import java.util.Map;
 
 public class Terrain {
     // Taille du terrain
-    private static final int LARGEUR = 60;
-    private static final int LONGUEUR = 100;
+    public  static final int LARGEUR = 60;
+    public  static final int LONGUEUR = 100;
 
     // Ou est chaque joueur en ce moment
     private Map<Joueur, Position> positions = new HashMap<>();
