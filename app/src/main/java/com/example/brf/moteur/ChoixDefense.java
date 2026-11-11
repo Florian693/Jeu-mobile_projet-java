@@ -8,12 +8,10 @@ public enum ChoixDefense {
 
     // Bonus de chance donne par ce choix (meme valeur que l'esquive)
     public int bonus() {
-        switch (this) {
-            case BLOCAGE:
-                return ChoixAttaque.BONUS_SUR;
-            default:
-                return 0;
+        if (this == BLOCAGE) {
+            return ChoixAttaque.BONUS_SUR;
         }
+        return 0;
     }
 
     // Vrai si le defenseur avance quand il gagne le duel

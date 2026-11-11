@@ -12,12 +12,10 @@ public enum ChoixAttaque {
 
     // Bonus de chance donne par ce choix
     public int bonus() {
-        switch (this) {
-            case ESQUIVE:
-                return BONUS_SUR;
-            default:
-                return 0;
+        if (this == ESQUIVE) {
+            return BONUS_SUR;
         }
+        return 0;
     }
 
     // Vrai si le porteur avance quand il gagne le duel
@@ -27,11 +25,9 @@ public enum ChoixAttaque {
 
     // La stat du joueur utilisee pour ce choix
     public int statUtilisee(Joueur joueur) {
-        switch (this) {
-            case ESQUIVE:
-                return joueur.getVit();
-            default:
-                return joueur.getDri();
+        if (this == ESQUIVE) {
+            return joueur.getVit();
         }
+        return joueur.getDri();
     }
 }
