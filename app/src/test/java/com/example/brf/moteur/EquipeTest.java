@@ -19,7 +19,7 @@ public class EquipeTest {
 
     @Test
     public void getGardien_renvoieLeGardienAjoute() {
-        Equipe equipe = new Equipe("Test", Formation.DEUX_TROIS_UN);
+        Equipe equipe = new Equipe("Test");
         Joueur gardien = creerJoueur(Poste.GARDIEN);
         equipe.ajouterJoueur(creerJoueur(Poste.MILIEU));
         equipe.ajouterJoueur(gardien);
@@ -29,37 +29,37 @@ public class EquipeTest {
 
     @Test
     public void getGardien_renvoieNullSiAucunGardien() {
-        Equipe equipe = new Equipe("Test", Formation.DEUX_TROIS_UN);
+        Equipe equipe = new Equipe("Test");
         equipe.ajouterJoueur(creerJoueur(Poste.MILIEU));
 
         assertNull(equipe.getGardien());
     }
 
     @Test
-    public void ajouterJoueur_refuseLeHuitiemeJoueur() {
-        Equipe equipe = new Equipe("Test", Formation.DEUX_TROIS_UN);
-        ajouterJoueurs(equipe, Poste.MILIEU, 7);
+    public void ajouterJoueur_refuseLeDouziemeJoueur() {
+        Equipe equipe = new Equipe("Test");
+        ajouterJoueurs(equipe, Poste.MILIEU, 11);
 
         boolean accepte = equipe.ajouterJoueur(creerJoueur(Poste.MILIEU));
 
         assertFalse(accepte);
-        assertEquals(7, equipe.getJoueurs().size());
+        assertEquals(11, equipe.getJoueurs().size());
     }
 
     @Test
-    public void getJoueursDuPoste_troisMilieuxEnDeuxTroisUn() {
-        Equipe equipe = new Equipe("Test", Formation.DEUX_TROIS_UN);
+    public void getJoueursDuPoste_quatreDefenseursEnQuatreTroisTrois() {
+        Equipe equipe = new Equipe("Test");
         ajouterJoueurs(equipe, Poste.GARDIEN, 1);
-        ajouterJoueurs(equipe, Poste.DEFENSEUR, 2);
+        ajouterJoueurs(equipe, Poste.DEFENSEUR, 4);
         ajouterJoueurs(equipe, Poste.MILIEU, 3);
-        ajouterJoueurs(equipe, Poste.ATTAQUANT, 1);
+        ajouterJoueurs(equipe, Poste.ATTAQUANT, 3);
 
-        assertEquals(3, equipe.getJoueursDuPoste(Poste.MILIEU).size());
+        assertEquals(4, equipe.getJoueursDuPoste(Poste.DEFENSEUR).size());
     }
 
     @Test
     public void recupererPEMiTemps_rendLesPEAuxJoueurs() {
-        Equipe equipe = new Equipe("Test", Formation.DEUX_TROIS_UN);
+        Equipe equipe = new Equipe("Test");
         Joueur a = creerJoueur(Poste.MILIEU);
         Joueur b = creerJoueur(Poste.DEFENSEUR);
         equipe.ajouterJoueur(a);
@@ -71,27 +71,5 @@ public class EquipeTest {
 
         assertEquals(40, a.getPeActuel());
         assertEquals(40, b.getPeActuel());
-    }
-
-    @Test
-    public void estComplete_vraiPourUneEquipeTroisDeuxUnBienRemplie() {
-        Equipe equipe = new Equipe("Test", Formation.TROIS_DEUX_UN);
-        ajouterJoueurs(equipe, Poste.GARDIEN, 1);
-        ajouterJoueurs(equipe, Poste.DEFENSEUR, 3);
-        ajouterJoueurs(equipe, Poste.MILIEU, 2);
-        ajouterJoueurs(equipe, Poste.ATTAQUANT, 1);
-
-        assertTrue(equipe.estComplete());
-    }
-
-    @Test
-    public void estComplete_fauxAvecTroisMilieuxEnTroisDeuxUn() {
-        Equipe equipe = new Equipe("Test", Formation.TROIS_DEUX_UN);
-        ajouterJoueurs(equipe, Poste.GARDIEN, 1);
-        ajouterJoueurs(equipe, Poste.DEFENSEUR, 2);
-        ajouterJoueurs(equipe, Poste.MILIEU, 3);
-        ajouterJoueurs(equipe, Poste.ATTAQUANT, 1);
-
-        assertFalse(equipe.estComplete());
     }
 }

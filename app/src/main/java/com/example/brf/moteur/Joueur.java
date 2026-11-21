@@ -1,20 +1,27 @@
 package com.example.brf.moteur;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Joueur {
+    public static final int MAX_TECHNIQUES = 2;
     private String nom;
     private Poste poste;
     private TypeJoueur type;
 
-// Stat joueur
+    /* Stat joueur */
     private int att;
     private int pas;
     private int dri;
     private int def;
     private int vit;
     private int arr;
-// PE Maximum et Actuel
+   /* PE Maximum et Actuel */
     private int peMax;
     private int peActuel;
+
+    /* techniques speciales */
+    private List<Technique> techniques;
+
     // Constructeur
     public Joueur(String nom, Poste poste, TypeJoueur type, int att, int pas, int dri, int def, int vit, int arr, int peMax){
         this.nom = nom;
@@ -28,6 +35,7 @@ public class Joueur {
         this.arr = arr;
         this.peMax = peMax;
         this.peActuel = peMax;
+        this.techniques = new ArrayList<>();
     }
 
     public String getNom() {
@@ -88,5 +96,33 @@ public class Joueur {
         else {
             peActuel = peMax;
         }
+    }
+
+    /* techniques : 2 max */
+    public boolean ajouterTechnique(Technique technique) {
+        if (techniques.size() >= MAX_TECHNIQUES) {
+            return false;
+        }
+        techniques.add(technique);
+        return true;
+    }
+
+    public List<Technique> getTechniques() {
+        return techniques;
+    }
+
+    public List<Technique> getTechniquesDuType(TypeTechnique type) {
+        List<Technique> resultat = new ArrayList<>();
+        for (Technique technique : techniques) {
+            if (technique.getType() == type) {
+                resultat.add(technique);
+            }
+        }
+        return resultat;
+    }
+
+    /* assez de PE ? */
+    public boolean peutLancer(Technique technique) {
+        return peActuel >= technique.getCoutPE();
     }
 }

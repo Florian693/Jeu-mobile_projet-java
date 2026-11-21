@@ -7,16 +7,21 @@ import java.util.List;
 
 public class TerrainTest {
 
-    // Crée une équipe complète qui respecte la formation donnée
-    private Equipe creerEquipe(String nom, Formation formation) {
-        Equipe equipe = new Equipe(nom, formation);
-        for (Poste poste : Poste.values()) {
-            for (int i = 0; i < formation.nombreAuPoste(poste); i++) {
-                equipe.ajouterJoueur(new Joueur(nom + " " + poste + " " + i, poste,
-                        TypeJoueur.VITESSE, 50, 50, 50, 50, 50, 50, 50));
-            }
-        }
+    /* equipe complete en 4-3-3 */
+    private Equipe creerEquipe(String nom) {
+        Equipe equipe = new Equipe(nom);
+        ajouterJoueurs(equipe, nom, Poste.GARDIEN, 1);
+        ajouterJoueurs(equipe, nom, Poste.DEFENSEUR, 4);
+        ajouterJoueurs(equipe, nom, Poste.MILIEU, 3);
+        ajouterJoueurs(equipe, nom, Poste.ATTAQUANT, 3);
         return equipe;
+    }
+
+    private void ajouterJoueurs(Equipe equipe, String nom, Poste poste, int nombre) {
+        for (int i = 0; i < nombre; i++) {
+            equipe.ajouterJoueur(new Joueur(nom + " " + poste + " " + i, poste,
+                    TypeJoueur.VITESSE, 50, 50, 50, 50, 50, 50, 50));
+        }
     }
 
     private Joueur creerMbappe() {
@@ -83,7 +88,7 @@ public class TerrainTest {
     @Test
     public void placerEnFormation_gardienDuHaut() {
         Terrain terrain = new Terrain();
-        Equipe eux = creerEquipe("Eux", Formation.DEUX_TROIS_UN);
+        Equipe eux = creerEquipe("Eux");
         terrain.placerEnFormation(eux, false);
         Position p = terrain.getPosition(eux.getGardien());
         assertEquals(30, p.getX(), 0.001);
@@ -91,23 +96,31 @@ public class TerrainTest {
     }
 
     @Test
-    public void placerEnFormation_troisDefenseursEnBas() {
+    public void placerEnFormation_quatreDefenseursEnBas() {
         Terrain terrain = new Terrain();
-        Equipe nous = creerEquipe("Nous", Formation.TROIS_DEUX_UN);
+        Equipe nous = creerEquipe("Nous");
         terrain.placerEnFormation(nous, true);
         List<Joueur> defenseurs = nous.getJoueursDuPoste(Poste.DEFENSEUR);
-        assertEquals(12, terrain.getPosition(defenseurs.get(0)).getX(), 0.001);
+        assertEquals(10, terrain.getPosition(defenseurs.get(0)).getX(), 0.001);
         assertEquals(20, terrain.getPosition(defenseurs.get(0)).getY(), 0.001);
-        assertEquals(30, terrain.getPosition(defenseurs.get(1)).getX(), 0.001);
-        assertEquals(18, terrain.getPosition(defenseurs.get(1)).getY(), 0.001);
-        assertEquals(48, terrain.getPosition(defenseurs.get(2)).getX(), 0.001);
-        assertEquals(20, terrain.getPosition(defenseurs.get(2)).getY(), 0.001);
+        assertEquals(50, terrain.getPosition(defenseurs.get(3)).getX(), 0.001);
+        assertEquals(20, terrain.getPosition(defenseurs.get(3)).getY(), 0.001);
+    }
+
+    @Test
+    public void placerEnFormation_equipeDuHautEnDemiTour() {
+        Terrain terrain = new Terrain();
+        Equipe eux = creerEquipe("Eux");
+        terrain.placerEnFormation(eux, false);
+        Joueur defenseur = eux.getJoueursDuPoste(Poste.DEFENSEUR).get(0);
+        assertEquals(50, terrain.getPosition(defenseur).getX(), 0.001);
+        assertEquals(80, terrain.getPosition(defenseur).getY(), 0.001);
     }
 
     @Test
     public void placerEnFormation_remplitAussiLesPositionsDeBase() {
         Terrain terrain = new Terrain();
-        Equipe nous = creerEquipe("Nous", Formation.DEUX_DEUX_DEUX);
+        Equipe nous = creerEquipe("Nous");
         terrain.placerEnFormation(nous, true);
         for (Joueur joueur : nous.getJoueurs()) {
             assertNotNull(terrain.getPosition(joueur));
@@ -120,7 +133,7 @@ public class TerrainTest {
     @Test
     public void joueursProches_trouveLeProcheEtIgnoreLeLoin() {
         Terrain terrain = new Terrain();
-        Equipe nous = creerEquipe("Nous", Formation.DEUX_TROIS_UN);
+        Equipe nous = creerEquipe("Nous");
         List<Joueur> joueurs = nous.getJoueurs();
         Joueur proche = joueurs.get(0);
         Joueur loin = joueurs.get(1);

@@ -3,18 +3,20 @@ package com.example.brf.moteur;
 import java.util.ArrayList;
 import java.util.List;
 public class Equipe {
-    public static final int TAILLE_EQUIPE = 7;
+    public static final int TAILLE_EQUIPE = 11;
 
     // List<Joueur> JoueursTitulaire = new ArrayList<>();
-    // D'abord on essaye juste les 7 joueurs on ajoutera après
+    // D'abord on essaye juste les 11 joueurs on ajoutera après
     // florian : Plus tard : 5 remplaçants dans une liste séparée
     private String nomEquipe;
-    private Formation formation;
+
+    // private Formation formation; pas utile pour le mmoment on reverra plus tard les formations
+
     private List<Joueur> joueurs;
 
-    public Equipe(String nomEquipe, Formation formation) {
+    public Equipe(String nomEquipe) { // ", Formation formation" enlever des parenthèses
         this.nomEquipe = nomEquipe;
-        this.formation = formation;
+        // this.formation = formation;
         this.joueurs = new ArrayList<>();
 
     }
@@ -23,9 +25,9 @@ public class Equipe {
         return nomEquipe;
     }
 
-    public Formation getFormation() {
-        return formation;
-    }
+    // public Formation getFormation() {
+    //    return formation;
+    //}
 
     public List<Joueur> getJoueurs() {
         return joueurs;
@@ -63,24 +65,24 @@ public void recupererPEMiTemps(int quantite) {
         }
 }
 
-    public boolean estComplete() { //est ce l'équipe correspond bien à la formation
-        // Étape 1 : il faut exactement 7 joueurs
-        if (joueurs.size() != TAILLE_EQUIPE) {
-            return false;
-        }
-
-        // Étape 2 : pour chaque poste, l'équipe doit avoir le nombre que la formation demande
-        for (Poste poste : Poste.values()) {
-            int attendu = formation.nombreAuPoste(poste);
-            int reel = getJoueursDuPoste(poste).size();
-            if (reel != attendu) {
-                return false;
-            }
-        }
-
-        // Étape 3 : aucun refus, l'équipe est complète
-        return true;
-    }
+//    public boolean estComplete() { //est ce l'équipe correspond bien à la formation
+//        // Étape 1 : il faut exactement 11 joueurs
+//        if (joueurs.size() != TAILLE_EQUIPE) {
+//            return false;
+//        }
+//
+//        // Étape 2 : pour chaque poste, l'équipe doit avoir le nombre que la formation demande
+//        for (Poste poste : Poste.values()) {
+//            int attendu = formation.nombreAuPoste(poste);
+//            int reel = getJoueursDuPoste(poste).size();
+//            if (reel != attendu) {
+//                return false;
+//            }
+//        }
+//
+//        // Étape 3 : aucun refus, l'équipe est complète
+//        return true;
+//    }
 
 }
 

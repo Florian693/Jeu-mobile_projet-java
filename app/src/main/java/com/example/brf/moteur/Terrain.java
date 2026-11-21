@@ -7,8 +7,8 @@ import java.util.Map;
 
 public class Terrain {
     // Taille du terrain
-    public  static final int LARGEUR = 60;
-    public  static final int LONGUEUR = 100;
+    public static final int LARGEUR = 60;
+    public static final int LONGUEUR = 100;
 
     // Ou est chaque joueur en ce moment
     private Map<Joueur, Position> positions = new HashMap<>();
@@ -46,12 +46,12 @@ public class Terrain {
     public void placerEnFormation(Equipe equipe, boolean enBas){
         for(Poste poste : Poste.values()){
             List<Joueur> joueursDuPoste = equipe.getJoueursDuPoste(poste);
-            Position[] places = positionsDuPoste(equipe.getFormation(), poste);
+            Position[] places = positionsDuPoste(poste);
 
             for (int i=0; i< joueursDuPoste.size() && i < places.length;i++){
                 Position place = places[i];
                 if(!enBas){
-                    place = new Position(place.getX(), LONGUEUR- place.getY());
+                    place = new Position(LARGEUR - place.getX(), LONGUEUR - place.getY());
                 }
                 Joueur joueur = joueursDuPoste.get(i);
                 positions.put(joueur,place);
@@ -70,26 +70,42 @@ public class Terrain {
         return resultat;
     }
 
-    // Positions de base d'un poste, pour l'équipe du bas (tableau de la mission 6)
-    private static Position[] positionsDuPoste(Formation formation, Poste poste) {
-        switch (poste) {
-            case GARDIEN:
-                return new Position[] { new Position(30, 4) };
-            case DEFENSEUR:
-                if (formation == Formation.TROIS_DEUX_UN) {
-                    return new Position[] { new Position(12, 20), new Position(30, 18), new Position(48, 20) };
-                }
-                return new Position[] { new Position(18, 20), new Position(42, 20) };
-            case MILIEU:
-                if (formation == Formation.DEUX_TROIS_UN) {
-                    return new Position[] { new Position(10, 38), new Position(30, 34), new Position(50, 38) };
-                }
-                return new Position[] { new Position(20, 34), new Position(40, 34) };
-            default: // ATTAQUANT
-                if (formation == Formation.DEUX_DEUX_DEUX) {
-                    return new Position[] { new Position(22, 46), new Position(38, 46) };
-                }
-                return new Position[] { new Position(30, 46) };
+//    // Positions de base d'un poste, pour l'équipe du bas (tableau de la mission 6)
+//    private static Position[] positionsDuPoste(Formation formation, Poste poste) {
+//        switch (poste) {
+//            case GARDIEN:
+//                return new Position[] { new Position(30, 4) };
+//            case DEFENSEUR:
+//                if (formation == Formation.TROIS_DEUX_UN) {
+//                    return new Position[] { new Position(12, 20), new Position(30, 18), new Position(48, 20) };
+//                }
+//                return new Position[] { new Position(18, 20), new Position(42, 20) };
+//            case MILIEU:
+//                if (formation == Formation.DEUX_TROIS_UN) {
+//                    return new Position[] { new Position(10, 38), new Position(30, 34), new Position(50, 38) };
+//                }
+//                return new Position[] { new Position(20, 34), new Position(40, 34) };
+//            default: // ATTAQUANT
+//                if (formation == Formation.DEUX_DEUX_DEUX) {
+//                    return new Position[] { new Position(22, 46), new Position(38, 46) };
+//                }
+//                return new Position[] { new Position(30, 46) };
+//        }
+//    }
+
+    /* 4-3-3 de l'equipe du bas, de gauche a droite on remettra le code en haut quand on aura des choix de formations */
+    private static Position[] positionsDuPoste(Poste poste) {
+        if (poste == Poste.GARDIEN) {
+            return new Position[] { new Position(30, 4) };
         }
+        if (poste == Poste.DEFENSEUR) {
+            return new Position[] { new Position(10, 20), new Position(23, 17),
+                    new Position(37, 17), new Position(50, 20) };
+        }
+        if (poste == Poste.MILIEU) {
+            return new Position[] { new Position(15, 32), new Position(30, 28), new Position(45, 32) };
+        }
+        /* attaquants : celui du milieu = avant-centre */
+        return new Position[] { new Position(12, 44), new Position(30, 46), new Position(48, 44) };
     }
 }
