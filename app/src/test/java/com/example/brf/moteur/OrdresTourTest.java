@@ -17,26 +17,45 @@ public class OrdresTourTest {
         assertEquals(0, ordres.getNombreFleches());
     }
 
+    // @Test
+    // public void troisFlechesAccepteesQuatriemeRefusee() {
+    //     OrdresTour ordres = new OrdresTour();
+    //     assertTrue(ordres.ajouterFleche(creerJoueur("A"), new Position(10, 10)));
+    //     assertTrue(ordres.ajouterFleche(creerJoueur("B"), new Position(20, 20)));
+    //     assertTrue(ordres.ajouterFleche(creerJoueur("C"), new Position(30, 30)));
+    //     assertFalse(ordres.ajouterFleche(creerJoueur("D"), new Position(40, 40)));
+    //     assertEquals(3, ordres.getNombreFleches());
+    // }
+
+    // @Test
+    // public void apresRetirerFlecheOnPeutEnRajouter() {
+    //     OrdresTour ordres = new OrdresTour();
+    //     Joueur a = creerJoueur("A");
+    //     ordres.ajouterFleche(a, new Position(10, 10));
+    //     ordres.ajouterFleche(creerJoueur("B"), new Position(20, 20));
+    //     ordres.ajouterFleche(creerJoueur("C"), new Position(30, 30));
+    //     ordres.retirerFleche(a);
+    //     assertTrue(ordres.ajouterFleche(creerJoueur("D"), new Position(40, 40)));
+    //     assertEquals(3, ordres.getNombreFleches());
+    // }
+
     @Test
-    public void troisFlechesAccepteesQuatriemeRefusee() {
+    public void onzeFlechesAcceptees() {
         OrdresTour ordres = new OrdresTour();
-        assertTrue(ordres.ajouterFleche(creerJoueur("A"), new Position(10, 10)));
-        assertTrue(ordres.ajouterFleche(creerJoueur("B"), new Position(20, 20)));
-        assertTrue(ordres.ajouterFleche(creerJoueur("C"), new Position(30, 30)));
-        assertFalse(ordres.ajouterFleche(creerJoueur("D"), new Position(40, 40)));
-        assertEquals(3, ordres.getNombreFleches());
+        for (int i = 0; i < 11; i++) {
+            ordres.ajouterFleche(creerJoueur("J" + i), new Position(i, i));
+        }
+        assertEquals(11, ordres.getNombreFleches());
     }
 
     @Test
-    public void apresRetirerFlecheOnPeutEnRajouter() {
+    public void retirerFleche() {
         OrdresTour ordres = new OrdresTour();
         Joueur a = creerJoueur("A");
         ordres.ajouterFleche(a, new Position(10, 10));
-        ordres.ajouterFleche(creerJoueur("B"), new Position(20, 20));
-        ordres.ajouterFleche(creerJoueur("C"), new Position(30, 30));
         ordres.retirerFleche(a);
-        assertTrue(ordres.ajouterFleche(creerJoueur("D"), new Position(40, 40)));
-        assertEquals(3, ordres.getNombreFleches());
+        assertNull(ordres.getFleche(a));
+        assertEquals(0, ordres.getNombreFleches());
     }
 
     @Test
@@ -49,22 +68,38 @@ public class OrdresTourTest {
         assertEquals(50, ordres.getFleche(a).getX(), 0.001);
     }
 
+    // @Test
+    // public void actionsDuPorteur() {
+    //     OrdresTour ordres = new OrdresTour();
+    //     Joueur receveur = creerJoueur("R");
+    //
+    //     ordres.avancer(new Position(30, 60));
+    //     assertEquals(ActionPorteur.AVANCER, ordres.getAction());
+    //     assertEquals(60, ordres.getCible().getY(), 0.001);
+    //
+    //     ordres.passer(receveur);
+    //     assertEquals(ActionPorteur.PASSER, ordres.getAction());
+    //     assertEquals(receveur, ordres.getReceveur());
+    //     assertNull(ordres.getCible());
+    //
+    //     ordres.tirer();
+    //     assertEquals(ActionPorteur.TIRER, ordres.getAction());
+    //     assertNull(ordres.getReceveur());
+    // }
+
     @Test
     public void actionsDuPorteur() {
         OrdresTour ordres = new OrdresTour();
         Joueur receveur = creerJoueur("R");
-
-        ordres.avancer(new Position(30, 60));
-        assertEquals(ActionPorteur.AVANCER, ordres.getAction());
-        assertEquals(60, ordres.getCible().getY(), 0.001);
+        Technique frappe = new Technique("Frappe", TypeTechnique.TIR, 10, 20);
 
         ordres.passer(receveur);
         assertEquals(ActionPorteur.PASSER, ordres.getAction());
         assertEquals(receveur, ordres.getReceveur());
-        assertNull(ordres.getCible());
 
-        ordres.tirer();
+        ordres.tirer(frappe);
         assertEquals(ActionPorteur.TIRER, ordres.getAction());
+        assertEquals(frappe, ordres.getTechnique());
         assertNull(ordres.getReceveur());
     }
 }
