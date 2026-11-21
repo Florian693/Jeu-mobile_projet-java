@@ -20,7 +20,7 @@ public class TerrainTest {
     }
 
     private Joueur creerMbappe() {
-        return new Joueur("Mbappe", Poste.ATTAQUANT, TypeJoueur.VITESSE, 87, 78, 84, 45, 96, 0, 50);
+        return new Joueur("mbappe", Poste.ATTAQUANT, TypeJoueur.VITESSE, 87, 78, 84, 45, 96, 0, 50);
     }
 
     // --- estDansLeTerrain et borner ---

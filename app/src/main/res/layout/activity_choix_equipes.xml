@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChoixEquipesActivity">
+
+    <!-- Lignes invisibles servant de reperes -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideGauche"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.27" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideDroite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.73" />
+
+    <!-- Hauteur du centre des logos et du VS -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLogos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.48" />
+
+    <!-- Hauteur des noms et des fleches -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideNoms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.66" />
+
+    <!-- Fond -->
+    <ImageView
+        android:id="@+id/imgFond"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/fond_stade_equipes"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Titre -->
+    <TextView
+        android:id="@+id/tvTitre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/press_start_2p"
+        android:text="CHOIX DES ÉQUIPES"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- ===== Joueur 1 (gauche) ===== -->
+    <ImageView
+        android:id="@+id/imgLogoGauche"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/logo_real"
+        app:layout_constraintTop_toTopOf="@id/guideLogos"
+        app:layout_constraintBottom_toBottomOf="@id/guideLogos"
+        app:layout_constraintStart_toStartOf="@id/guideGauche"
+        app:layout_constraintEnd_toEndOf="@id/guideGauche" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="@id/guideNoms"
+        app:layout_constraintBottom_toBottomOf="@id/guideNoms"
+        app:layout_constraintStart_toStartOf="@id/guideGauche"
+        app:layout_constraintEnd_toEndOf="@id/guideGauche">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnGauchePrec"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/btn_pixel"
+            android:fontFamily="@font/press_start_2p"
+            android:text="&lt;"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:padding="0dp" />
+
+        <TextView
+            android:id="@+id/tvNomGauche"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/press_start_2p"
+            android:gravity="center"
+            android:text="REAL MADRID"
+            android:textColor="#FFFFFF"
+            android:textSize="10sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnGaucheSuiv"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/btn_pixel"
+            android:fontFamily="@font/press_start_2p"
+            android:text="&gt;"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:padding="0dp" />
+    </LinearLayout>
+
+    <!-- VS au centre -->
+    <TextView
+        android:id="@+id/tvVs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/press_start_2p"
+        android:text="VS"
+        android:textColor="#FFD600"
+        android:textSize="28sp"
+        app:layout_constraintTop_toTopOf="@id/guideLogos"
+        app:layout_constraintBottom_toBottomOf="@id/guideLogos"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- ===== Joueur 2 (droite) ===== -->
+    <ImageView
+        android:id="@+id/imgLogoDroite"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/logo_barca"
+        app:layout_constraintTop_toTopOf="@id/guideLogos"
+        app:layout_constraintBottom_toBottomOf="@id/guideLogos"
+        app:layout_constraintStart_toStartOf="@id/guideDroite"
+        app:layout_constraintEnd_toEndOf="@id/guideDroite" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="@id/guideNoms"
+        app:layout_constraintBottom_toBottomOf="@id/guideNoms"
+        app:layout_constraintStart_toStartOf="@id/guideDroite"
+        app:layout_constraintEnd_toEndOf="@id/guideDroite">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnDroitePrec"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/btn_pixel"
+            android:fontFamily="@font/press_start_2p"
+            android:text="&lt;"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:padding="0dp" />
+
+        <TextView
+            android:id="@+id/tvNomDroite"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/press_start_2p"
+            android:gravity="center"
+            android:text="FC BARCELONE"
+            android:textColor="#FFFFFF"
+            android:textSize="10sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnDroiteSuiv"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/btn_pixel"
+            android:fontFamily="@font/press_start_2p"
+            android:text="&gt;"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:padding="0dp" />
+    </LinearLayout>
+
+    <!-- Boutons du bas -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnJouerMatch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_pixel"
+        android:fontFamily="@font/press_start_2p"
+        android:text="JOUER LE MATCH"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintWidth_percent="0.4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnQuitterChoix"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_pixel"
+        android:fontFamily="@font/press_start_2p"
+        android:text="QUITTER"
+        android:textColor="#FFFFFF"
+        android:textSize="10sp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
