@@ -164,4 +164,134 @@ public class MoteurMatchTest {
 
         assertEquals(55 - 20, dejong.getPeActuel());
     }
+
+    @Test
+    public void passeSansAdversaire_reussie() {
+        MoteurMatch match = creerMatch(99);
+        Joueur bellingham = trouver(real, "Bellingham");
+        OrdresTour ordres = new OrdresTour();
+        ordres.passer(bellingham);
+
+        List<ResultatAction> resultats = match.jouerTour(ordres, new OrdresTour());
+
+        assertEquals(TypeResultat.PASSE_REUSSIE, resultats.get(0).getType());
+        assertEquals(TypeResultat.TOUR_TERMINE, resultats.get(1).getType());
+        assertEquals(bellingham, match.getPorteur());
+    }
+
+    @Test
+    public void passeAvecAdversaireSurLeTrajet_coupee() {
+        MoteurMatch match = creerMatch(99);
+        Joueur cubarsi = trouver(barca, "Cubarsi");
+        match.getTerrain().placer(cubarsi, new Position(22.5, 39));
+        OrdresTour ordres = new OrdresTour();
+        ordres.passer(trouver(real, "Bellingham"));
+
+        List<ResultatAction> resultats = match.jouerTour(ordres, new OrdresTour());
+
+        assertEquals(1, resultats.size());
+        assertEquals(TypeResultat.INTERCEPTION, resultats.get(0).getType());
+        assertEquals(cubarsi, match.getPorteur());
+    }
+
+    @Test
+    public void passeAvecAdversaireQuiRate_reussie() {
+        MoteurMatch match = creerMatch(0);
+        Joueur bellingham = trouver(real, "Bellingham");
+        match.getTerrain().placer(trouver(barca, "Cubarsi"), new Position(22.5, 39));
+        OrdresTour ordres = new OrdresTour();
+        ordres.passer(bellingham);
+
+        List<ResultatAction> resultats = match.jouerTour(ordres, new OrdresTour());
+
+        assertEquals(TypeResultat.PASSE_REUSSIE, resultats.get(0).getType());
+        assertEquals(bellingham, match.getPorteur());
+    }
+
+    @Test
+    public void tirTropLoin_ignore() {
+        MoteurMatch match = creerMatch(0);
+        assertFalse(match.peutTirer());
+        OrdresTour ordres = new OrdresTour();
+        ordres.tirer(null);
+
+        List<ResultatAction> resultats = match.jouerTour(ordres, new OrdresTour());
+
+        assertEquals(TypeResultat.TOUR_TERMINE, resultats.get(0).getType());
+        assertEquals(0, real.getButs());
+    }
+
+    @Test
+    public void tirReussi_butPuisEngagementDuBarca() {
+        MoteurMatch match = creerMatch(0);
+        Joueur mbappe = match.getPorteur();
+        match.getTerrain().placer(mbappe, new Position(30, 85));
+        assertTrue(match.peutTirer());
+        OrdresTour ordres = new OrdresTour();
+        ordres.tirer(null);
+
+        List<ResultatAction> resultats = match.jouerTour(ordres, new OrdresTour());
+
+        assertEquals(TypeResultat.BUT, resultats.get(0).getType());
+        assertEquals(1, real.getButs());
+        assertEquals("Gabriel Jesus", match.getPorteur().getNom());
+        assertEquals(46, match.getTerrain().getPosition(mbappe).getY(), 0.001);
+    }
+
+    @Test
+    public void tirRate_leGardienPrendLeBallon() {
+        MoteurMatch match = creerMatch(99);
+        match.getTerrain().placer(match.getPorteur(), new Position(30, 85));
+        OrdresTour ordres = new OrdresTour();
+        ordres.tirer(null);
+
+        List<ResultatAction> resultats = match.jouerTour(ordres, new OrdresTour());
+
+        assertEquals(TypeResultat.TIR_ARRETE, resultats.get(0).getType());
+        assertEquals(barca.getGardien(), match.getPorteur());
+    }
+
+    @Test
+    public void techniqueDeTir_depenseLesPE() {
+        MoteurMatch match = creerMatch(0);
+        Joueur mbappe = match.getPorteur();
+        match.getTerrain().placer(mbappe, new Position(30, 85));
+        Technique frappe = mbappe.getTechniquesDuType(TypeTechnique.TIR).get(0);
+        OrdresTour ordres = new OrdresTour();
+        ordres.tirer(frappe);
+
+        match.jouerTour(ordres, new OrdresTour());
+
+        assertEquals(60 - 30, mbappe.getPeActuel());
+    }
+
+    @Test
+    public void miTempsAuTour20_engagementDuBarcaEtPERendus() {
+        MoteurMatch match = creerMatch(0);
+        Joueur mbappe = match.getPorteur();
+        mbappe.depenserPE(30);
+
+        List<ResultatAction> resultats = null;
+        for (int i = 0; i < MoteurMatch.TOURS_PAR_MI_TEMPS; i++) {
+            resultats = match.jouerTour(new OrdresTour(), new OrdresTour());
+        }
+
+        assertEquals(TypeResultat.MI_TEMPS, dernierType(resultats));
+        assertEquals("Gabriel Jesus", match.getPorteur().getNom());
+        assertEquals(50, mbappe.getPeActuel());
+        assertFalse(match.estTermine());
+    }
+
+    @Test
+    public void finDuMatchAuTour40() {
+        MoteurMatch match = creerMatch(0);
+
+        List<ResultatAction> resultats = null;
+        for (int i = 0; i < 2 * MoteurMatch.TOURS_PAR_MI_TEMPS; i++) {
+            resultats = match.jouerTour(new OrdresTour(), new OrdresTour());
+        }
+
+        assertEquals(TypeResultat.FIN_DU_MATCH, dernierType(resultats));
+        assertTrue(match.estTermine());
+    }
 }

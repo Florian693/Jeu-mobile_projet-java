@@ -72,4 +72,12 @@ public class EquipeTest {
         assertEquals(40, a.getPeActuel());
         assertEquals(40, b.getPeActuel());
     }
+    @Test
+    public void marquerBut_ajouteUnBut() {
+        Equipe equipe = new Equipe("Test");
+        assertEquals(0, equipe.getButs());
+        equipe.marquerBut();
+        equipe.marquerBut();
+        assertEquals(2, equipe.getButs());
+    }
 }

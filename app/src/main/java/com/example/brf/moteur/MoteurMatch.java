@@ -5,10 +5,14 @@ import java.util.List;
 import java.util.Random;
 
 public class MoteurMatch {
+    public static final int TOURS_PAR_MI_TEMPS = 20;
+    public static final int PE_MI_TEMPS = 20;       /* PE rendus a la mi-temps */
     public static final int ETAPES_PAR_TOUR = 10;   /* 1 tour = 10 petits pas */
 
     public static final double RAYON_DUEL = 3;      /* contact porteur / adversaire */
     public static final double AVANCE_DUEL = 6;     /* dribble ou tacle gagne : +6 */
+    public static final double RAYON_INTERCEPTION = 3;   /* adversaire pres de la passe */
+    public static final double DISTANCE_TIR = 25;        /* tir possible a 25 du but */
 
     /* centre des buts */
     public static final Position BUT_DU_BAS = new Position(Terrain.LARGEUR / 2.0, 0);
@@ -23,6 +27,7 @@ public class MoteurMatch {
     private Joueur defenseurDuel;  /* SI duel a jouer */
     private Joueur joueurBattu;    /* perdant du dernier duel proteger pdnt 1 tour */
     private int tour;
+    private boolean termine;
 
     public MoteurMatch(Equipe equipe1, Equipe equipe2, Random random) {
         this.equipe1 = equipe1;
@@ -30,6 +35,7 @@ public class MoteurMatch {
         this.terrain = new Terrain();
         this.duel = new Duel(random);
         this.tour = 0;
+        this.termine = false;
         engagement(equipe1);
     }
 
@@ -53,6 +59,15 @@ public class MoteurMatch {
         return tour;
     }
 
+    public boolean estTermine() {
+        return termine;
+    }
+
+    /* assez pres du but adverse ? */
+    public boolean peutTirer() {
+        return terrain.getPosition(porteur).distance(butAttaque(porteur)) <= DISTANCE_TIR;
+    }
+
     /* Tour */
 
     public List<ResultatAction> jouerTour(OrdresTour ordres1, OrdresTour ordres2) {
@@ -60,6 +75,30 @@ public class MoteurMatch {
         tour++;
         Joueur protege = joueurBattu;
         joueurBattu = null;
+
+        /* ordres de l'equipe qui a le ballon */
+        OrdresTour ordresPorteur = ordres2;
+        if (equipeDe(porteur) == equipe1) {
+            ordresPorteur = ordres1;
+        }
+
+        /* tir : fin du tour */
+        if (ordresPorteur.getAction() == ActionPorteur.TIRER && peutTirer()) {
+            resultats.add(tirer(ordresPorteur.getTechnique()));
+            finirLeTour(resultats);
+            return resultats;
+        }
+
+        /* passe : coupee = fin du tour */
+        if (ordresPorteur.getAction() == ActionPorteur.PASSER && ordresPorteur.getReceveur() != null) {
+            ResultatAction passe = passer(ordresPorteur.getReceveur());
+            resultats.add(passe);
+            if (passe.getType() == TypeResultat.INTERCEPTION) {
+                finirLeTour(resultats);
+                return resultats;
+            }
+        }
+
         /* deplacements en 10 pas */
         for (int etape = 1; etape <= ETAPES_PAR_TOUR; etape++) {
             deplacer(equipe1, ordres1);
@@ -76,6 +115,7 @@ public class MoteurMatch {
         }
 
         resultats.add(new ResultatAction(TypeResultat.TOUR_TERMINE, "Fin du tour " + tour));
+        finirLeTour(resultats);
         return resultats;
     }
 
@@ -112,7 +152,61 @@ public class MoteurMatch {
                     defenseur.getNom() + " prend le ballon a " + attaquant.getNom() + " !",
                     chance, 1.0, attaquant, defenseur));
         }
+        finirLeTour(resultats);
         return resultats;
+    }
+
+    /* Actions */
+
+    /* tir contre le gardien : plus c'est loin, plus c'est dur */
+    private ResultatAction tirer(Technique technique) {
+        Joueur tireur = porteur;
+        Equipe defense = adversaireDe(tireur);
+        Joueur gardien = defense.getGardien();
+
+        int distance = (int) terrain.getPosition(tireur).distance(butAttaque(tireur));
+        int statTir = tireur.getAtt() + bonusTechnique(tireur, technique) - distance;
+        int chance = Duel.calculerChance(statTir, gardien.getArr(), tireur.getType(), gardien.getType());
+
+        if (duel.tirer(chance)) {
+            equipeDe(tireur).marquerBut();
+            engagement(defense);   /* l'equipe qui a pris le but engage */
+            return new ResultatAction(TypeResultat.BUT, "But de " + tireur.getNom() + " !",
+                    chance, 1.0, tireur, gardien);
+        }
+        porteur = gardien;
+        return new ResultatAction(TypeResultat.TIR_ARRETE, "Arret de " + gardien.getNom() + " !",
+                chance, 1.0, tireur, gardien);
+    }
+
+    /* 10 points sur la passe : le 1er adversaire trop pres tente de la couper */
+    private ResultatAction passer(Joueur receveur) {
+        Joueur passeur = porteur;
+        Position depart = terrain.getPosition(passeur);
+        Position arrivee = terrain.getPosition(receveur);
+        int chance = -1;
+
+        for (int i = 1; i <= ETAPES_PAR_TOUR; i++) {
+            double fraction = (double) i / ETAPES_PAR_TOUR;
+            Position point = Position.pointSurTrajet(depart, arrivee, fraction);
+            List<Joueur> proches = terrain.joueursProches(point, RAYON_INTERCEPTION, adversaireDe(passeur));
+            if (!proches.isEmpty()) {
+                Joueur adversaire = proches.get(0);
+                chance = Duel.calculerChance(passeur.getPas(), adversaire.getDef(),
+                        passeur.getType(), adversaire.getType());
+                if (!duel.tirer(chance)) {
+                    porteur = adversaire;
+                    return new ResultatAction(TypeResultat.INTERCEPTION,
+                            "Interception de " + adversaire.getNom() + " !",
+                            chance, fraction, passeur, adversaire);
+                }
+                break;   /* rate : la passe arrive */
+            }
+        }
+        porteur = receveur;
+        return new ResultatAction(TypeResultat.PASSE_REUSSIE,
+                "Passe de " + passeur.getNom() + " pour " + receveur.getNom(),
+                chance, 0, passeur, receveur);
     }
 
     /* 1 petit pas pour chaque joueur qui a une fleche */
@@ -150,6 +244,21 @@ public class MoteurMatch {
     private void avancerVersLeBut(Joueur joueur) {
         Position nouvelle = terrain.getPosition(joueur).versCible(butAttaque(joueur), AVANCE_DUEL);
         terrain.placer(joueur, nouvelle);
+    }
+
+    /* Mi-temps : tour 20, fin du match : tour 40 */
+
+    private void finirLeTour(List<ResultatAction> resultats) {
+        if (tour == TOURS_PAR_MI_TEMPS) {
+            equipe1.recupererPEMiTemps(PE_MI_TEMPS);
+            equipe2.recupererPEMiTemps(PE_MI_TEMPS);
+            engagement(equipe2);
+            resultats.add(new ResultatAction(TypeResultat.MI_TEMPS, "Mi-temps"));
+        }
+        if (tour == 2 * TOURS_PAR_MI_TEMPS) {
+            termine = true;
+            resultats.add(new ResultatAction(TypeResultat.FIN_DU_MATCH, "Fin du match"));
+        }
     }
 
     private void engagement(Equipe equipeQuiEngage) {

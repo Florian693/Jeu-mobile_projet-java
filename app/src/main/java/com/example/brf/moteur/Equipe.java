@@ -13,11 +13,13 @@ public class Equipe {
     // private Formation formation; pas utile pour le mmoment on reverra plus tard les formations
 
     private List<Joueur> joueurs;
+    private int buts;   /* score */
 
     public Equipe(String nomEquipe) { // ", Formation formation" enlever des parenthèses
         this.nomEquipe = nomEquipe;
         // this.formation = formation;
         this.joueurs = new ArrayList<>();
+        this.buts = 0;
 
     }
 
@@ -50,20 +52,28 @@ public class Equipe {
         }
         return null;
     }
-public List<Joueur> getJoueursDuPoste(Poste poste) {
-    List<Joueur> resultat = new ArrayList<>();
-    for (Joueur joueur : joueurs) {
-        if (joueur.getPoste() == poste) {
-            resultat.add(joueur);
+    public List<Joueur> getJoueursDuPoste(Poste poste) {
+        List<Joueur> resultat = new ArrayList<>();
+        for (Joueur joueur : joueurs) {
+            if (joueur.getPoste() == poste) {
+                resultat.add(joueur);
+            }
         }
-    }
     return resultat;
-}
-public void recupererPEMiTemps(int quantite) {
+    }
+    public void recupererPEMiTemps(int quantite) {
         for (Joueur joueur : joueurs) {
             joueur.recupererPE(quantite);
         }
-}
+    }
+
+    public void marquerBut() {
+        buts++;
+    }
+
+    public int getButs() {
+        return buts;
+    }
 
 //    public boolean estComplete() { //est ce l'équipe correspond bien à la formation
 //        // Étape 1 : il faut exactement 11 joueurs
@@ -85,5 +95,4 @@ public void recupererPEMiTemps(int quantite) {
 //    }
 
 }
-
 
