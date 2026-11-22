@@ -26,6 +26,7 @@ public class MoteurMatch {
     private Joueur porteur;
     private Joueur defenseurDuel;  /* SI duel a jouer */
     private Joueur joueurBattu;    /* perdant du dernier duel proteger pdnt 1 tour */
+    private Technique techniqueTir;   /* SI tir a jouer */
     private int tour;
     private boolean termine;
 
@@ -63,6 +64,11 @@ public class MoteurMatch {
         return termine;
     }
 
+    /* perdant du dernier duel : ne bouge pas au prochain tour */
+    public Joueur getJoueurBattu() {
+        return joueurBattu;
+    }
+
     /* assez pres du but adverse ? */
     public boolean peutTirer() {
         return terrain.getPosition(porteur).distance(butAttaque(porteur)) <= DISTANCE_TIR;
@@ -82,10 +88,12 @@ public class MoteurMatch {
             ordresPorteur = ordres1;
         }
 
-        /* tir : fin du tour */
+        /* tir : le gardien doit choisir (jouerTir) */
         if (ordresPorteur.getAction() == ActionPorteur.TIRER && peutTirer()) {
-            resultats.add(tirer(ordresPorteur.getTechnique()));
-            finirLeTour(resultats);
+            techniqueTir = ordresPorteur.getTechnique();
+            Joueur gardien = adversaireDe(porteur).getGardien();
+            resultats.add(new ResultatAction(TypeResultat.TIR_A_JOUER,
+                    "Tir de " + porteur.getNom() + " !", -1, 0, porteur, gardien));
             return resultats;
         }
 
@@ -101,8 +109,8 @@ public class MoteurMatch {
 
         /* deplacements en 10 pas */
         for (int etape = 1; etape <= ETAPES_PAR_TOUR; etape++) {
-            deplacer(equipe1, ordres1);
-            deplacer(equipe2, ordres2);
+            deplacer(equipe1, ordres1, protege);
+            deplacer(equipe2, ordres2, protege);
             /* contact = duel, fin du tour */
             Joueur adversaire = adversaireAuContact(protege);
             if (adversaire != null) {
@@ -156,17 +164,28 @@ public class MoteurMatch {
         return resultats;
     }
 
+    /* Tir */
+    /* technique du gardien : null si pas de technique */
+    public List<ResultatAction> jouerTir(ChoixGardien choixGardien, Technique techniqueGardien) {
+        List<ResultatAction> resultats = new ArrayList<>();
+        resultats.add(tirer(choixGardien, techniqueGardien));
+        finirLeTour(resultats);
+        return resultats;
+    }
+
     /* Actions */
 
     /* tir contre le gardien : plus c'est loin, plus c'est dur */
-    private ResultatAction tirer(Technique technique) {
+    private ResultatAction tirer(ChoixGardien choixGardien, Technique techniqueGardien) {
         Joueur tireur = porteur;
         Equipe defense = adversaireDe(tireur);
         Joueur gardien = defense.getGardien();
 
         int distance = (int) terrain.getPosition(tireur).distance(butAttaque(tireur));
-        int statTir = tireur.getAtt() + bonusTechnique(tireur, technique) - distance;
-        int chance = Duel.calculerChance(statTir, gardien.getArr(), tireur.getType(), gardien.getType());
+        int statTir = tireur.getAtt() + bonusTechnique(tireur, techniqueTir) - distance;
+        int statGardien = gardien.getArr() + choixGardien.bonus() + bonusTechnique(gardien, techniqueGardien);
+        int chance = Duel.calculerChance(statTir, statGardien, tireur.getType(), gardien.getType());
+        techniqueTir = null;
 
         if (duel.tirer(chance)) {
             equipeDe(tireur).marquerBut();
@@ -174,8 +193,14 @@ public class MoteurMatch {
             return new ResultatAction(TypeResultat.BUT, "But de " + tireur.getNom() + " !",
                     chance, 1.0, tireur, gardien);
         }
-        porteur = gardien;
-        return new ResultatAction(TypeResultat.TIR_ARRETE, "Arret de " + gardien.getNom() + " !",
+        if (choixGardien.garderLeBallon()) {
+            porteur = gardien;
+            return new ResultatAction(TypeResultat.TIR_ARRETE, "Arret de " + gardien.getNom() + " !",
+                    chance, 1.0, tireur, gardien);
+        }
+        porteur = plusProcheDe(gardien);   /* plongeon : ballon relache */
+        return new ResultatAction(TypeResultat.TIR_ARRETE,
+                gardien.getNom() + " repousse, ballon pour " + porteur.getNom() + " !",
                 chance, 1.0, tireur, gardien);
     }
 
@@ -209,11 +234,11 @@ public class MoteurMatch {
                 chance, 0, passeur, receveur);
     }
 
-    /* 1 petit pas pour chaque joueur qui a une fleche */
-    private void deplacer(Equipe equipe, OrdresTour ordres) {
+    /* 1 petit pas pour chaque joueur qui a une fleche (sauf le joueur battu) */
+    private void deplacer(Equipe equipe, OrdresTour ordres, Joueur immobile) {
         for (Joueur joueur : equipe.getJoueurs()) {
             Position cible = ordres.getFleche(joueur);
-            if (cible != null) {
+            if (cible != null && joueur != immobile) {
                 double pas = joueur.getDistanceParTour() / ETAPES_PAR_TOUR;
                 Position nouvelle = terrain.getPosition(joueur).versCible(cible, pas);
                 terrain.placer(joueur, terrain.borner(nouvelle));
@@ -281,6 +306,21 @@ public class MoteurMatch {
             return equipe2;
         }
         return equipe1;
+    }
+
+    /* joueur le plus proche (des 2 equipes), sauf lui-meme */
+    private Joueur plusProcheDe(Joueur joueur) {
+        Position centre = terrain.getPosition(joueur);
+        List<Joueur> tous = new ArrayList<>(equipe1.getJoueurs());
+        tous.addAll(equipe2.getJoueurs());
+        Joueur plusProche = null;
+        for (Joueur autre : tous) {
+            if (autre != joueur && (plusProche == null
+                    || terrain.getPosition(autre).distance(centre) < terrain.getPosition(plusProche).distance(centre))) {
+                plusProche = autre;
+            }
+        }
+        return plusProche;
     }
 
     /* but que le joueur attaque */

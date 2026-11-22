@@ -8,7 +8,10 @@ public class Effectifs {
     public static Equipe realMadrid() {
         Equipe equipe = new Equipe("Real Madrid");
 
-        equipe.ajouterJoueur(new Joueur("Courtois", Poste.GARDIEN, TypeJoueur.PUISSANCE, 20, 64, 30, 42, 58, 90, 60));
+        Joueur courtois = new Joueur("Courtois", Poste.GARDIEN, TypeJoueur.PUISSANCE, 20, 64, 30, 42, 58, 90, 60);
+        courtois.ajouterTechnique(new Technique("Main Géante", TypeTechnique.ARRET, 20, 30));
+        courtois.ajouterTechnique(new Technique("Envol Royal", TypeTechnique.ARRET, 14, 20));
+        equipe.ajouterJoueur(courtois);
 
         Joueur cucurella = new Joueur("Cucurella", Poste.DEFENSEUR, TypeJoueur.PUISSANCE, 55, 76, 72, 80, 80, 0, 50);
         cucurella.ajouterTechnique(new Technique("Tacle Tornade", TypeTechnique.DEFENSE, 18, 25));
@@ -66,7 +69,10 @@ public class Effectifs {
     public static Equipe barcelone() {
         Equipe equipe = new Equipe("FC Barcelone");
 
-        equipe.ajouterJoueur(new Joueur("Joan Garcia", Poste.GARDIEN, TypeJoueur.VITESSE, 20, 70, 35, 40, 62, 86, 60));
+        Joueur garcia = new Joueur("Joan Garcia", Poste.GARDIEN, TypeJoueur.VITESSE, 20, 70, 35, 40, 62, 86, 60);
+        garcia.ajouterTechnique(new Technique("Griffe Catalane", TypeTechnique.ARRET, 18, 25));
+        garcia.ajouterTechnique(new Technique("Réflexe Éclair", TypeTechnique.ARRET, 14, 20));
+        equipe.ajouterJoueur(garcia);
 
         Joueur balde = new Joueur("Balde", Poste.DEFENSEUR, TypeJoueur.VITESSE, 58, 74, 80, 74, 92, 0, 50);
         balde.ajouterTechnique(new Technique("Flèche Catalane", TypeTechnique.DRIBBLE, 16, 20));

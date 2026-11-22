@@ -7,6 +7,12 @@ import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 
+import com.example.brf.moteur.Effectifs;
+import com.example.brf.moteur.Equipe;
+import com.example.brf.moteur.MoteurMatch;
+
+import java.util.Random;
+
 // Ecran 3 : le match, plein ecran.
 public class MatchActivity extends AppCompatActivity {
 
@@ -26,8 +32,16 @@ public class MatchActivity extends AppCompatActivity {
         // Equipes choisies a l'ecran 2
         int equipeGauche = getIntent().getIntExtra("equipeGauche", 0);
         int equipeDroite = getIntent().getIntExtra("equipeDroite", 1);
+        MoteurMatch match = new MoteurMatch(creerEquipe(equipeGauche), creerEquipe(equipeDroite), new Random());
 
         MatchView matchView = findViewById(R.id.matchView);
-        matchView.setEquipes(equipeGauche, equipeDroite);
+        matchView.commencer(match, equipeGauche, equipeDroite);
+    }
+
+    private Equipe creerEquipe(int choix) {
+        if (choix == 1) {
+            return Effectifs.barcelone();
+        }
+        return Effectifs.realMadrid();
     }
 }

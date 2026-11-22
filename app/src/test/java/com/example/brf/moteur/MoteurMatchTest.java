@@ -230,7 +230,8 @@ public class MoteurMatchTest {
         OrdresTour ordres = new OrdresTour();
         ordres.tirer(null);
 
-        List<ResultatAction> resultats = match.jouerTour(ordres, new OrdresTour());
+        match.jouerTour(ordres, new OrdresTour());
+        List<ResultatAction> resultats = match.jouerTir(ChoixGardien.ARRET, null);
 
         assertEquals(TypeResultat.BUT, resultats.get(0).getType());
         assertEquals(1, real.getButs());
@@ -245,10 +246,72 @@ public class MoteurMatchTest {
         OrdresTour ordres = new OrdresTour();
         ordres.tirer(null);
 
-        List<ResultatAction> resultats = match.jouerTour(ordres, new OrdresTour());
+        match.jouerTour(ordres, new OrdresTour());
+        List<ResultatAction> resultats = match.jouerTir(ChoixGardien.ARRET, null);
 
         assertEquals(TypeResultat.TIR_ARRETE, resultats.get(0).getType());
         assertEquals(barca.getGardien(), match.getPorteur());
+    }
+
+    @Test
+    public void tirCadre_leGardienDoitChoisir() {
+        MoteurMatch match = creerMatch(0);
+        match.getTerrain().placer(match.getPorteur(), new Position(30, 85));
+        OrdresTour ordres = new OrdresTour();
+        ordres.tirer(null);
+
+        List<ResultatAction> resultats = match.jouerTour(ordres, new OrdresTour());
+
+        assertEquals(TypeResultat.TIR_A_JOUER, dernierType(resultats));
+        assertEquals(barca.getGardien(), resultats.get(0).getDefenseur());
+        assertEquals(0, real.getButs());
+    }
+
+    @Test
+    public void plongeonArrete_ballonPourLeJoueurLePlusProche() {
+        MoteurMatch match = creerMatch(99);
+        match.getTerrain().placer(match.getPorteur(), new Position(30, 85));
+        Position gardien = match.getTerrain().getPosition(barca.getGardien());
+        Joueur cubarsi = trouver(barca, "Cubarsi");
+        match.getTerrain().placer(cubarsi, new Position(gardien.getX() + 1, gardien.getY()));
+        OrdresTour ordres = new OrdresTour();
+        ordres.tirer(null);
+
+        match.jouerTour(ordres, new OrdresTour());
+        List<ResultatAction> resultats = match.jouerTir(ChoixGardien.PLONGEON, null);
+
+        assertEquals(TypeResultat.TIR_ARRETE, resultats.get(0).getType());
+        assertEquals(cubarsi, match.getPorteur());
+    }
+
+    @Test
+    public void techniqueDuGardien_depenseLesPE() {
+        MoteurMatch match = creerMatch(99);
+        match.getTerrain().placer(match.getPorteur(), new Position(30, 85));
+        Joueur garcia = barca.getGardien();
+        Technique griffe = garcia.getTechniquesDuType(TypeTechnique.ARRET).get(0);
+        OrdresTour ordres = new OrdresTour();
+        ordres.tirer(null);
+
+        match.jouerTour(ordres, new OrdresTour());
+        match.jouerTir(ChoixGardien.ARRET, griffe);
+
+        assertEquals(60 - 25, garcia.getPeActuel());
+    }
+
+    @Test
+    public void joueurBattu_neBougePasAuTourSuivant() {
+        MoteurMatch match = creerMatchAvecDuel(0);
+        Joueur dejong = trouver(barca, "Frenkie de Jong");
+        match.jouerTour(new OrdresTour(), new OrdresTour());
+        match.jouerDuel(ChoixAttaque.ESQUIVE, null, ChoixDefense.BLOCAGE, null);
+        assertEquals(dejong, match.getJoueurBattu());
+
+        OrdresTour ordres = new OrdresTour();
+        ordres.ajouterFleche(dejong, new Position(30, 30));
+        match.jouerTour(new OrdresTour(), ordres);
+
+        assertEquals(48, match.getTerrain().getPosition(dejong).getY(), 0.001);
     }
 
     @Test
@@ -261,6 +324,7 @@ public class MoteurMatchTest {
         ordres.tirer(frappe);
 
         match.jouerTour(ordres, new OrdresTour());
+        match.jouerTir(ChoixGardien.ARRET, null);
 
         assertEquals(60 - 30, mbappe.getPeActuel());
     }

@@ -9,6 +9,7 @@ public enum TypeResultat {
     DUEL_A_JOUER,        // contact avec le porteur : chaque camp doit choisir
     DUEL_GAGNE_ATTAQUE,  // le porteur a gagne le duel
     DUEL_GAGNE_DEFENSE,  // le defenseur a pris le ballon
+    TIR_A_JOUER,         // tir cadre : le gardien doit choisir
     BUT,                 // le tir est rentre
     TIR_ARRETE,          // le gardien a arrete le tir
     MI_TEMPS,            // fin de la 1re mi-temps
