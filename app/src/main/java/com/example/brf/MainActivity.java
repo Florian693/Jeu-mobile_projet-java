@@ -22,14 +22,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnQuitter = findViewById(R.id.btnQuitter);
 
         btnJouer.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, HubActivity.class));
-        });
-
-
-        Button btnOptions = findViewById(R.id.btnOptions);
-        btnOptions.setOnClickListener(v -> {
-            Intent intent = new Intent(this, OptionsActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(MainActivity.this, ChoixEquipesActivity.class));
         });
 
         btnQuitter.setOnClickListener(v -> finishAffinity());
