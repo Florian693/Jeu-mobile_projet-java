@@ -59,4 +59,9 @@ public class JoueurTest {
         mbappe.depenserPE(30);   /* reste 20 PE */
         assertFalse(mbappe.peutLancer(chere));
     }
+    @Test
+    public void getDistanceParTour_vitesseDiviseePar4(){
+        Joueur mbappe = new Joueur("Mbappe",Poste.ATTAQUANT,TypeJoueur.VITESSE,87,78,84,45,96,0,50);
+        assertEquals(24, mbappe.getDistanceParTour(), 0.001);
+    }
 }

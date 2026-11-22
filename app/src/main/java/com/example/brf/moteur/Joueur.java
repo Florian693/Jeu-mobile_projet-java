@@ -3,6 +3,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Joueur {
+
+    /* distance max en un tour : vit 80 -> 20 */
+    public double getDistanceParTour() {
+        return vit / 4.0;
+    }
     public static final int MAX_TECHNIQUES = 2;
     private String nom;
     private Poste poste;
@@ -22,7 +27,7 @@ public class Joueur {
     /* techniques speciales */
     private List<Technique> techniques;
 
-    // Constructeur
+    /* Constructeur */
     public Joueur(String nom, Poste poste, TypeJoueur type, int att, int pas, int dri, int def, int vit, int arr, int peMax){
         this.nom = nom;
         this.poste = poste;
